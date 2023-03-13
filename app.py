@@ -13,18 +13,15 @@ data = (
 # STYLESHEET config
 
 external_stylesheets = [
-    {
-        "href": (
-            "https://fonts.googleapis.com/css2"
-            "family=Lato:wght@400;700&display=swap"
-        ),
-        "rel": "stylesheet",
-    },
+    'https://fonts.googleapis.com/css2?family=Sono&display=swap',
 ]
 
+
 app = Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "Pokemon index"
+app.title = "pokémon index"
 app._favicon = "favico.ico"
+app.css.config.serve_locally = True
+
 
 # LAYOUT
 
@@ -33,7 +30,7 @@ app.layout = html.Div(
         html.Div(
             children=[
                 html.Img(src=r"assets/images/raichu.png", className="header-icon"),
-                html.H1(children="Pokemon index", className="header-title"),
+                html.H1(children="pokémon index", className="header-title"),
                 html.P(children="Find the perfect Pokémon for your battle!", className="header-description"),
             ], className="header", style={'textAlign': 'center'}),
         html.Div(
@@ -59,6 +56,32 @@ app.layout = html.Div(
                                 "xaxis": {"fixedrange": True},
                                 "yaxis": {"fixedrange": True},
                                 "colorway": ["purple"],
+                        },
+                        },
+                    ),
+                    className="card",
+                ),
+                html.Div(
+                    children=dcc.Graph(
+                        id="attack-chart",
+                        config={"displayModeBar": False},
+                        figure={
+                            "data": [
+                            {
+                                "x": data["pokedex_number"],
+                                "y": data["sp_attack"],
+                                "type": "bar"
+                            },
+                        ],
+                        "layout": {
+                                "title": {
+                                    "text": "Sp. attack per pokemon",
+                                    "x": 0.05,
+                                    "xanchor": "left",
+                                },
+                                "xaxis": {"fixedrange": False},
+                                "yaxis": {"fixedrange": False},
+                                "colorway": ["#f5bb1c"],
                         },
                         },
                     ),
