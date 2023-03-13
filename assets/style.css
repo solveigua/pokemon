@@ -1,5 +1,5 @@
 body {
-    font-family: "Lato", sans-serif;
+    font-family: "Roboto", sans-serif;
     margin: 0;
     background-color: #F7F7F7;
 }
@@ -10,8 +10,7 @@ body {
     padding: 16px 0 0 0;
 }
 
-.header-emoji {
-    font-size: 48px;
+.header-icon {
     margin: 0 auto;
     text-align: center;
 }

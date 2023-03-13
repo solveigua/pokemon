@@ -15,7 +15,7 @@ data = (
 external_stylesheets = [
     {
         "href": (
-            "https://fonts.googleapis.com/css2?"
+            "https://fonts.googleapis.com/css2"
             "family=Lato:wght@400;700&display=swap"
         ),
         "rel": "stylesheet",
@@ -24,6 +24,7 @@ external_stylesheets = [
 
 app = Dash(__name__, external_stylesheets=external_stylesheets)
 app.title = "Pokemon index"
+app._favicon = "favico.ico"
 
 # LAYOUT
 
@@ -31,10 +32,10 @@ app.layout = html.Div(
     children=[
         html.Div(
             children=[
-                html.P(children="👾", className="header-emoji"),
+                html.Img(src=r"assets/images/raichu.png", className="header-icon"),
                 html.H1(children="Pokemon index", className="header-title"),
                 html.P(children="Find the perfect Pokémon for your battle!", className="header-description"),
-            ], className="header"),
+            ], className="header", style={'textAlign': 'center'}),
         html.Div(
             children=[
                 html.Div(
