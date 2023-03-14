@@ -18,3 +18,17 @@ This app runs on python.
    ```
    python app.py
    ```
+
+## Tech stack
+
+Dataset from kaggle, read from csv file using \***\*\*\*\*\*\*\***pandas\***\*\*\*\*\*\*\***.
+
+**Dash** for python - an open source framework specifically for creating data visualization interfaces.
+
+Three technologies constitute the core of Dash:
+
+1. **Flask** -web server functionality
+2. **React.js** user interface of the web page
+3. **Plotly.js** generates the charts
+
+I chose Dash as it is something new I haven’t tried before, it is simple to use for this purpose and uses frameworks I am familiar with, like React.
