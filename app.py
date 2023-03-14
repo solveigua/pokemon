@@ -1,14 +1,18 @@
 # app.py
 
 import pandas as pd
-from dash import Dash, dcc, html
+from dash import Dash, dcc, html, Input, Output
 
 # INITIALIZATION
 # uses pandas to read csv files and query.
 data = (
-    pd.read_csv("pokemon.csv", index_col="name", on_bad_lines="skip")
+    pd.read_csv("pokemon.csv", index_col="pokedex_number", on_bad_lines="skip")
 )
 #print(data)
+types = data["type1"].sort_values().unique()
+japanese_names = data["japanese_name"].sort_values().unique()
+#print(japanese_names)
+
 
 # STYLESHEET config
 
@@ -35,6 +39,20 @@ app.layout = html.Div(
             ], className="header", style={'textAlign': 'center'}),
         html.Div(
             children=[
+                 html.Div(
+                    children= [
+                     html.H3(children="Search for Pokémon ... ", className="card-description"),
+                        dcc.Dropdown(
+                            japanese_names,
+                            id="poke-search",
+                            clearable=False,
+                            searchable=True,
+                            className="dropdown",
+                        ),
+                        html.Div(id="dropdown"),
+                    ],
+                    className="card",
+                ),
                 html.Div(
                     children=dcc.Graph(
                         id="speed-chart",
@@ -42,7 +60,7 @@ app.layout = html.Div(
                         figure={
                             "data": [
                             {
-                                "x": data["pokedex_number"],
+                                "x": data["name"],
                                 "y": data["speed"],
                                 "type": "lines", # bar
                             },
@@ -68,7 +86,7 @@ app.layout = html.Div(
                         figure={
                             "data": [
                             {
-                                "x": data["pokedex_number"],
+                                "x": data["name"],
                                 "y": data["sp_attack"],
                                 "type": "bar"
                             },
@@ -80,7 +98,7 @@ app.layout = html.Div(
                                     "xanchor": "left",
                                 },
                                 "xaxis": {"fixedrange": False},
-                                "yaxis": {"fixedrange": False},
+                                "yaxis": {"fixedrange": True},
                                 "colorway": ["#f5bb1c"],
                         },
                         },
@@ -92,6 +110,15 @@ app.layout = html.Div(
         ),
     ]
 )
+
+# CALLBACKS
+
+@app.callback(
+    Output('dropdown', 'children'),
+    Input('poke-search', 'value')
+)
+def update_output(value):
+    return f'You have selected {value}'
 
 # RUN
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 body {
     font-family: "Sono";
     margin: 0;
-    background-color: #F7F7F7;
+   background-color: #F7F7F7;
 }
 
 .header {
@@ -42,4 +42,10 @@ body {
 .card {
     margin-bottom: 24px;
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
+}
+    .card-description {
+    padding: 10px 10px 10px 10px;
+    background-color: #FFFFFF;
+    margin: 0 0 0 0;
+
 }
