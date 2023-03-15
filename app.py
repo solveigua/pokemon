@@ -11,6 +11,7 @@ data = (
 #print(data)
 types = data["type1"].sort_values().unique()
 japanese_names = data["japanese_name"].sort_values().unique()
+names = data["name"].sort_values().unique()
 #print(japanese_names)
 
 
@@ -43,13 +44,17 @@ app.layout = html.Div(
                     children= [
                      html.H3(children="Search for Pokémon ... ", className="card-description"),
                         dcc.Dropdown(
-                            japanese_names,
+                            data["name"],
                             id="poke-search",
                             clearable=False,
                             searchable=True,
                             className="dropdown",
                         ),
-                        html.Div(id="dropdown"),
+                        html.Div(id="dropdown", className="selection-text"),
+                        dcc.Graph(
+                            id="poke-search-chart",
+                            config={"displayModeBar":False},
+                            ),
                     ],
                     className="card",
                 ),
@@ -115,10 +120,34 @@ app.layout = html.Div(
 
 @app.callback(
     Output('dropdown', 'children'),
+    Output('poke-search-chart', 'figure'),
     Input('poke-search', 'value')
 )
-def update_output(value):
-    return f'You have selected {value}'
+def update_figure(value):
+    filtered_data = data[data.name==value].iloc[:, 1:18]
+#    print(value)
+    y = filtered_data.values.flatten().tolist() #pokedex nr
+#    print(f"\n{filtered_data}")
+    x = filtered_data.columns.values
+    
+    figure = {
+            "data": [
+                {
+                "x": x,
+                "y": y,
+                "type": "bar",
+                },
+                ],
+                         "layout": {
+                                "title": {
+                                    "text": "Efficiency against types:",
+                                    "x": 0.05,
+                                    "xanchor": "left",
+                                },
+                                "xaxis": {"fixedrange": False},
+                        },
+    }
+    return f'You have selected {value}', figure
 
 # RUN
 if __name__ == "__main__":
