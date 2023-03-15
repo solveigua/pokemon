@@ -125,15 +125,15 @@ app.layout = html.Div(
 )
 def update_figure(value):
     filtered_data = data[data.name==value].iloc[:, 1:18]
-#    print(value)
-    y = filtered_data.values.flatten().tolist() #pokedex nr
-#    print(f"\n{filtered_data}")
-    x = filtered_data.columns.values
-    
+    y = filtered_data.values.flatten().tolist()
+    try:
+        jap_name = data[data.name==value]["japanese_name"].values[0]
+    except:
+        jap_name = ""
     figure = {
             "data": [
                 {
-                "x": x,
+                "x": types,
                 "y": y,
                 "type": "bar",
                 "marker" : { "color" : ['#a8b820', '#6f5848', '#7038f8', '#f9d030', '#ee99ac', '#c03128', '#f08030', '#a790f0', '#705898', '#78c84f','#e0c068','#99d8d8', '#a8a878', '#a040a0','#f85888','#b7a039','#b8b8d0']}},
@@ -147,7 +147,8 @@ def update_figure(value):
                                 "xaxis": {"fixedrange": False},
                         },
     }
-    return f'You have selected {value}', figure
+#     return f'You have selected {value}'
+    return f'Viewing stats for {jap_name}', figure
 
 # RUN
 if __name__ == "__main__":
