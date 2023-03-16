@@ -10,7 +10,7 @@ This app runs on python.
    python -m venv venv
    source v`nv/bin/activate
    # while in venv:
-   python -m pip install dash==2.8.1 pandas==1.5.3
+   python -m pip install dash==2.8.1 pandas==1.5.3 
    ```
 
 2. run app
