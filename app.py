@@ -2,8 +2,9 @@
 
 import pandas as pd
 from dash import Dash, dcc, html, Input, Output
+import plotly.express as px
 
-# INITIALIZATION
+# INITIALIZATION AND DATA
 # uses pandas to read csv files and query.
 data = (
     pd.read_csv("pokemon.csv", index_col="pokedex_number", on_bad_lines="skip")
@@ -14,6 +15,25 @@ japanese_names = data["japanese_name"].sort_values().unique()
 names = data["name"].sort_values().unique()
 #print(japanese_names)
 
+# type matrix:
+z = [[1, 1, 1, 1, 1, .5, 1, 0, .5, 1, 1, 1, 1, 1, 1, 1, 1, 1], #normal
+     [2, 1, .5, .5, 1, 2, .5, 0, 2, 1, 1, 1, 1, .5, 2, 1, 2, .5], #fighting
+     [1, 2, 1, 1, 1, .5, 2, 1, .5, 1, 1, 2, .5, 1, 1, 1, 1, 1], #flying
+     [1, 1, 1, .5, .5, .5, 1, .5, 0, 1, 1, 2, 1, 1, 1, 1, 1, 2], #poison
+     [1, 1, 0, 2, 1, .5, 1, 0, 2, 2, 1, .5, 2, 1, 1, 1, 1, 1], #ground
+     [1, .5, 2, 1, .5, 1, 2, 1, .5, 2, 1, 1, 1, 1, 2, 1, 1, 1], #rock
+     [1, .5, .5, .5, 1, 1, 1, .5, .5, .5, 1, 2, 1, 2, 1, 1, 2, .5], #bug
+     [0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, 1], #ghost
+     [1, 1, 1, 1, 1, 2, 1, 1, .5, .5, .5, 1, .5, 1, 2, 1, 1, 2], #steel
+     [1, 1, 1, 1, 1, .5, 2, 1, 2, .5, .5, 2, 1, 1, 2, .5, 1, 1], #fire
+     [1, 1, 1, 1, 2, 2, 1, 1, 1, 2, .5, .5, 1, 1, 1, .5, 1, 1], #water
+     [1, 1, .5, .5, 2, 2, .5, 1, .5, .5, 2, .5, 1, 1, 1, .5, 1, 1], #grass
+     [1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 2, .5, .5, 1, 1, .5, 1, 1], #electric
+     [1, 2, 1, 2, 1, 1, 1, 1, .5, 1, 1, 1, 1, .5, 1, 1, 0, 1], #psychic
+     [1, 1, 2, 1, 2, 1, 1, 1, .5, .5, .5, 2, 1, 1, .5, 2, 1, 1], #ice
+     [1, 1, 1, 1, 1, 1, 1, 1, .5, 1, 1, 1, 1, 1, 1, 2, 1, 0], #dragon
+     [1, .5, 1, 1, 1, .5, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, .5], #dark
+     [1, 2, 1, .5, 1, 1, 1, 1, .5, .5, 1, 1, 1, 1, 1, 2, 2, 1]] #fairy
 
 # STYLESHEET config
 
@@ -58,58 +78,14 @@ app.layout = html.Div(
                     ],
                     className="card",
                 ),
-                html.Div(
-                    children=dcc.Graph(
-                        id="speed-chart",
+                
+                html.Div([
+                     html.H3(children="Pokémon type chart", className="card-description"),
+                    dcc.Graph(
+                        id="attack-chart",                        
                         config={"displayModeBar": False},
-                        figure={
-                            "data": [
-                            {
-                                "x": data["name"],
-                                "y": data["speed"],
-                                "type": "lines", # bar
-                            },
-                        ],
-                        "layout": {
-                                "title": {
-                                    "text": "Speed per pokemon",
-                                    "x": 0.05,
-                                    "xanchor": "left",
-                                },
-                                "xaxis": {"fixedrange": True},
-                                "yaxis": {"fixedrange": True},
-                                "colorway": ["purple"],
-                        },
-                        },
-                    ),
-                    className="card",
-                ),
-                html.Div(
-                    children=dcc.Graph(
-                        id="attack-chart",
-                        config={"displayModeBar": False},
-                        figure={
-                            "data": [
-                            {
-                                "x": data["name"],
-                                "y": data["sp_attack"],
-                                "type": "bar"
-                            },
-                        ],
-                        "layout": {
-                                "title": {
-                                    "text": "Sp. attack per pokemon",
-                                    "x": 0.05,
-                                    "xanchor": "left",
-                                },
-                                "xaxis": {"fixedrange": False},
-                                "yaxis": {"fixedrange": True},
-                                "colorway": ["#f5bb1c"],
-                        },
-                        },
-                    ),
-                    className="card",
-                ),
+                        )
+                    ], className="card",)
             ],
             className="wrapper",
         ),
@@ -121,6 +97,7 @@ app.layout = html.Div(
 @app.callback(
     Output('dropdown', 'children'),
     Output('poke-search-chart', 'figure'),
+    Output('attack-chart', 'figure'),
     Input('poke-search', 'value')
 )
 def update_figure(value):
@@ -130,6 +107,9 @@ def update_figure(value):
         jap_name = data[data.name==value]["japanese_name"].values[0]
     except:
         jap_name = ""
+    
+    fig = px.imshow(z, text_auto=True)
+    
     figure = {
             "data": [
                 {
@@ -144,11 +124,11 @@ def update_figure(value):
                                     "x": 0.05,
                                     "xanchor": "left",
                                 },
-                                "xaxis": {"fixedrange": False},
+                                "xaxis": {"fixedrange": True},
+                                "yaxis": {"fixedrange": True},
                         },
     }
-#     return f'You have selected {value}'
-    return f'Viewing stats for {jap_name}', figure
+    return f'Viewing stats for {jap_name}', figure, fig
 
 # RUN
 if __name__ == "__main__":
