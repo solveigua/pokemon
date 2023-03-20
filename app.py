@@ -122,6 +122,7 @@ def update_figure(value):
                     labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
                     color_continuous_scale='RdBu',
                     aspect="auto",
+                    text_auto=True
                     )
     fig.update_xaxes(side="top")
     fig.update_layout(coloraxis_showscale=False)
