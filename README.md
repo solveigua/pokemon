@@ -1,8 +1,10 @@
-# pokémon viz website
+# pokémon data viz website
+
+<img width="1016" alt="image" src="https://user-images.githubusercontent.com/70148072/228538959-e56dca93-2311-4438-abbc-a92798096755.png">
 
 ### initializing and running
 
-This app runs on python.
+This app runs on python. (v3).
 
 1. create virtual env
 
@@ -10,7 +12,7 @@ This app runs on python.
    python -m venv venv
    source v`nv/bin/activate
    # while in venv:
-   python -m pip install dash==2.8.1 pandas==1.5.3 
+   pip install -r requirements.txt 
    ```
 
 2. run app
@@ -21,7 +23,7 @@ This app runs on python.
 
 ## Tech stack
 
-Dataset from kaggle, read from csv file using \***\*\*\*\*\*\*\***pandas\***\*\*\*\*\*\*\***.
+Dataset from kaggle ([source](https://www.kaggle.com/datasets/rounakbanik/pokemon)), read from csv file using **pandas**
 
 **Dash** for python - an open source framework specifically for creating data visualization interfaces.
 
