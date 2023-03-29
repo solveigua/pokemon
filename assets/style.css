@@ -10,6 +10,18 @@ body {
     padding: 16px 0 0 0;
 }
 
+.footer {
+    background-color: #222222;
+    height: 112px;
+    display: flex;
+    padding: 16px 0 0 0;
+}
+
+.footer-link{
+    margin: 0 auto;
+    align-self: center;
+}
+
 .header-icon {
     margin: 0 auto;
     text-align: center;
@@ -58,3 +70,15 @@ body {
 .attack-chart{
     padding-left: 15px;
 }
+
+a {
+    color: #CFCFCF;
+    background-color: transparent;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: none;
+  }

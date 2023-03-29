@@ -97,6 +97,10 @@ app.layout = html.Div(
             ],
             className="wrapper",
         ),
+        html.Div([    
+            html.A("Made by Solveig <3", href='https://github.com/solveigua', target="_blank", className="footer-link"), 
+        ], className="footer",
+    ), 
     ]
 )
 
