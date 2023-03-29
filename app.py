@@ -89,9 +89,33 @@ app.layout = html.Div(
                 html.Div([
                      html.H3(children="Pokémon type chart", className="card-description"),
                     dcc.Graph(
-                        id="attack-chart",                        
+                        id="attack-chart",
+                        figure = px.imshow(z, 
+                            x=types, 
+                            y=types, 
+                            labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
+                            color_continuous_scale='RdBu',
+                            aspect="auto",
+                            text_auto=True
+                            )
+                            .update_xaxes(side="top")
+                            .update_layout(coloraxis_showscale=False),                        
                         config={"displayModeBar": False},
                         className="attack-chart",
+                        )
+                    ], className="card",),
+
+                html.Div([
+                     html.H3(children="Scatter plot", className="card-description"),
+                    dcc.Graph(
+                        id="scatter-plot",
+                        figure = px.scatter(data, x="sp_defense", y="sp_attack", size="speed", color="type1")
+                            .update_layout(
+                                plot_bgcolor='rgba(0, 0, 0, 0)',
+                                paper_bgcolor='rgba(0, 0, 0, 0)',
+                            ),                        
+                        config={"displayModeBar": False},
+                        className="scatter-plot",
                         )
                     ], className="card",)
             ],
@@ -109,7 +133,6 @@ app.layout = html.Div(
 @app.callback(
     Output('dropdown', 'children'),
     Output('poke-search-chart', 'figure'),
-    Output('attack-chart', 'figure'),
     Input('poke-search', 'value')
 )
 def update_figure(value):
@@ -119,17 +142,8 @@ def update_figure(value):
         jap_name = data[data.name==value]["japanese_name"].values[0]
     except:
         jap_name = ""
+
     
-    fig = px.imshow(z, 
-                    x=types, 
-                    y=types, #hallo må sorteres, er feil.
-                    labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
-                    color_continuous_scale='RdBu',
-                    aspect="auto",
-                    text_auto=True
-                    )
-    fig.update_xaxes(side="top")
-    fig.update_layout(coloraxis_showscale=False)
     figure = {
             "data": [
                 {
@@ -148,7 +162,7 @@ def update_figure(value):
                                 "yaxis": {"fixedrange": True},
                         },
     }
-    return f'Viewing stats for {jap_name}', figure, fig
+    return f'Viewing stats for {jap_name}', figure
 
 # RUN
 if __name__ == "__main__":
