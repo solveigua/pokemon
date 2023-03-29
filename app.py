@@ -136,8 +136,9 @@ app.layout = html.Div(
     Input('poke-search', 'value')
 )
 def update_figure(value):
-    filtered_data = data[data.name==value].iloc[:, 1:18]
+    filtered_data = data[data.name==value].iloc[:, 1:19]
     y = filtered_data.values.flatten().tolist()
+    print(filtered_data)
     try:
         jap_name = data[data.name==value]["japanese_name"].values[0]
     except:
