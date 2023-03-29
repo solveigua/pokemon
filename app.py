@@ -40,8 +40,10 @@ z = [
      
 
 # type colors:
-colors = ['#a8b820', '#6f5848', '#7038f8', '#f9d030', '#ee99ac', '#c03128', '#f08030', '#a790f0', '#705898', '#78c84f','#e0c068','#99d8d8', '#a8a878', '#a040a0','#f85888','#b7a039','#b8b8d0']
+colors = ['#a8b820', '#6f5848', '#7038f8', '#f9d030', '#ee99ac', '#c03128', '#f08030', '#a790f0', '#705898', '#78c84f','#e0c068','#99d8d8', '#a8a878', '#a040a0','#f85888','#b7a039','#b8b8d0', '#6890f0']
 
+# for scatter plot:
+scatter_colors = [ '#78c84f', '#f08030', '#6890f0', '#a8b820', '#a8a878', '#a040a0',  '#f9d030', '#e0c068',  '#ee99ac',  '#c03128', '#f85888', '#b7a039', '#705898', '#99d8d8',  '#7038f8',  '#6f5848', '#b8b8d0',  '#a790f0']
 # STYLESHEET config
 
 external_stylesheets = [
@@ -85,6 +87,35 @@ app.layout = html.Div(
                     ],
                     className="card",
                 ),
+
+                html.Div([
+                     html.H3(children="Special Attacks-and-Defense Stats Across Primary Types", className="card-description"),
+                    dcc.Graph(
+                        id="scatter-plot",
+                        figure = px.scatter(
+                                data, x="sp_defense",
+                                y="sp_attack", 
+                                #size="speed", 
+                                color="type1",
+                                color_discrete_sequence=scatter_colors,
+                                hover_name="name",
+                                labels={
+                                        "type1": "Primary Type",
+                                        "speed" : "Speed",
+                                        "sp_defense" : "Special Defense",
+                                        "sp_attack" : "Special Attack"}
+                        )
+                            .update_layout(
+                                plot_bgcolor='rgba(0, 0, 0, 0)',
+                                paper_bgcolor='rgba(0, 0, 0, 0)',
+                                xaxis = {'title': 'Special defense'},
+                                yaxis = {'title': 'Special Attack'}
+                            )
+                            ,                      
+                        config={"displayModeBar": False},
+                        className="scatter-plot",
+                        )
+                    ], className="card",) ,
                 
                 html.Div([
                      html.H3(children="Pokémon type chart", className="card-description"),
@@ -105,19 +136,7 @@ app.layout = html.Div(
                         )
                     ], className="card",),
 
-                html.Div([
-                     html.H3(children="Scatter plot", className="card-description"),
-                    dcc.Graph(
-                        id="scatter-plot",
-                        figure = px.scatter(data, x="sp_defense", y="sp_attack", size="speed", color="type1")
-                            .update_layout(
-                                plot_bgcolor='rgba(0, 0, 0, 0)',
-                                paper_bgcolor='rgba(0, 0, 0, 0)',
-                            ),                        
-                        config={"displayModeBar": False},
-                        className="scatter-plot",
-                        )
-                    ], className="card",)
+                
             ],
             className="wrapper",
         ),
@@ -138,7 +157,6 @@ app.layout = html.Div(
 def update_figure(value):
     filtered_data = data[data.name==value].iloc[:, 1:19]
     y = filtered_data.values.flatten().tolist()
-    print(filtered_data)
     try:
         jap_name = data[data.name==value]["japanese_name"].values[0]
     except:
