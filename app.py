@@ -111,7 +111,7 @@ app.layout = html.Div(
                             x=types, 
                             y=types, 
                             labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
-                            color_continuous_scale='tropic_r', #tropic_r, earth, picninc, RdBu, armyrose_r
+                            color_continuous_scale='RdBu', #tropic_r, earth, picninc, RdBu, armyrose_r
                             aspect="auto",
                             text_auto=True
                             )
