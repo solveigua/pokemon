@@ -53,7 +53,7 @@ body {
 
 .card {
     margin-bottom: 24px;
-    padding-bottom: 5px;
+    padding: 0 5px 5px 5px;
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.18);
     background-color: #FFFFFF;
 }
@@ -62,7 +62,10 @@ body {
     margin: 0 0 0 0;
 
 }
-
+.radio-mode{
+    margin: 0px 20px 5px 10px;
+    padding: 10px;
+}
 .dropdown, .selection-text{
     margin: 0px 10px 5px 10px;
 }

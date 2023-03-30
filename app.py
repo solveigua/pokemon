@@ -1,7 +1,7 @@
 # app.py
 
 import pandas as pd
-from dash import Dash, dcc, html, Input, Output
+from dash import html, Dash, dcc, Input, Output
 import plotly.express as px
 
 # INITIALIZATION AND DATA
@@ -89,29 +89,15 @@ app.layout = html.Div(
                 ),
 
                 html.Div([
-                     html.H3(children="Special Attacks-and-Defense Stats Across Primary Types", className="card-description"),
+                    html.H3(children="Special Attacks-and-Defense Stats Across Primary Types", className="card-description"),
+                    dcc.RadioItems(
+                        id="radio-mode", 
+                        value="simple \t", 
+                        options=["simple \t", "show speed"],
+                        className="radio-mode"
+                    ),
                     dcc.Graph(
-                        id="scatter-plot",
-                        figure = px.scatter(
-                                data, x="sp_defense",
-                                y="sp_attack", 
-                                #size="speed", 
-                                color="type1",
-                                color_discrete_sequence=scatter_colors,
-                                hover_name="name",
-                                labels={
-                                        "type1": "Primary Type",
-                                        "speed" : "Speed",
-                                        "sp_defense" : "Special Defense",
-                                        "sp_attack" : "Special Attack"}
-                        )
-                            .update_layout(
-                                plot_bgcolor='rgba(0, 0, 0, 0)',
-                                paper_bgcolor='rgba(0, 0, 0, 0)',
-                                xaxis = {'title': 'Special defense'},
-                                yaxis = {'title': 'Special Attack'}
-                            )
-                            ,                      
+                        id="scatter-plot",                    
                         config={"displayModeBar": False},
                         className="scatter-plot",
                         )
@@ -125,7 +111,7 @@ app.layout = html.Div(
                             x=types, 
                             y=types, 
                             labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
-                            color_continuous_scale='RdBu',
+                            color_continuous_scale='tropic_r', #tropic_r, earth, picninc, RdBu, armyrose_r
                             aspect="auto",
                             text_auto=True
                             )
@@ -152,16 +138,17 @@ app.layout = html.Div(
 @app.callback(
     Output('dropdown', 'children'),
     Output('poke-search-chart', 'figure'),
-    Input('poke-search', 'value')
+    Output('scatter-plot', 'figure'),
+    Input('poke-search', 'value'),
+    Input('radio-mode', 'value')
 )
-def update_figure(value):
-    filtered_data = data[data.name==value].iloc[:, 1:19]
+def update_figure(name, mode):
+    filtered_data = data[data.name==name].iloc[:, 1:19]
     y = filtered_data.values.flatten().tolist()
     try:
-        jap_name = data[data.name==value]["japanese_name"].values[0]
+        jap_name = data[data.name==name]["japanese_name"].values[0]
     except:
         jap_name = ""
-
     
     figure = {
             "data": [
@@ -181,7 +168,29 @@ def update_figure(value):
                                 "yaxis": {"fixedrange": True},
                         },
     }
-    return f'Viewing stats for {jap_name}', figure
+
+    if (mode == 'show speed'):
+        size = "speed"
+    else:
+        size = None
+    scatter = px.scatter(
+                data, x="sp_defense",
+                y="sp_attack", 
+                size=size, 
+                color="type1",
+                color_discrete_sequence=scatter_colors,
+                hover_name="name",
+                labels={
+                        "type1": "Primary Type",
+                        "speed" : "Speed",
+                        "sp_defense" : "Special Defense",
+                        "sp_attack" : "Special Attack"}
+        )
+    scatter.update_layout(
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0, 0, 0, 0)',)
+
+    return f'Viewing stats for {jap_name}', figure, scatter
 
 # RUN
 if __name__ == "__main__":
