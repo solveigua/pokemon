@@ -10,9 +10,9 @@ This app runs on python. (v3).
 
    ```
    python -m venv venv
-   source v`nv/bin/activate
+   source venv/bin/activate
    # while in venv:
-   pip install -r requirements.txt 
+   pip install -r requirements.txt
    ```
 
 2. run app
