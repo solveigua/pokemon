@@ -34,3 +34,4 @@ Three technologies constitute the core of Dash:
 3. **Plotly.js** generates the charts
 
 I chose Dash as it is something new I haven’t tried before, it is simple to use for this purpose and uses frameworks I am familiar with, like React.
+The idea for the web page was inspired by my DataViz course at UCT (Univeristy of Cape Town) :)
