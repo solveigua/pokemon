@@ -189,6 +189,7 @@ def update_figure(name, mode):
     scatter.update_layout(
         plot_bgcolor='rgba(0, 0, 0, 0)',
         paper_bgcolor='rgba(0, 0, 0, 0)',)
+    scatter.update_traces(marker=dict(line=dict(width=0)))
 
     return f'Viewing stats for {jap_name}', figure, scatter
 
