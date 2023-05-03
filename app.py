@@ -9,35 +9,10 @@ import plotly.express as px
 data = (
     pd.read_csv("pokemon.csv", index_col="pokedex_number", on_bad_lines="skip")
 )
-#print(data)
 types = data["type1"].sort_values().unique()
 japanese_names = data["japanese_name"].sort_values().unique()
 names = data["name"].sort_values().unique()
-#print(japanese_names)
-
-# type matrix:
-z = [     
-    [1, .5, .5, .5, 1, 1, 1, .5, .5, .5, 1, 2, 1, 2, 1, 1, 2, .5], #bug
-    [1, .5, 1, 1, 1, .5, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, .5], #dark
-    [1, 1, 1, 1, 1, 1, 1, 1, .5, 1, 1, 1, 1, 1, 1, 2, 1, 0], #dragon
-    [1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 2, .5, .5, 1, 1, .5, 1, 1], #electric
-    [1, 2, 1, .5, 1, 1, 1, 1, .5, .5, 1, 1, 1, 1, 1, 2, 2, 1], #fairy
-     [2, 1, .5, .5, 1, 2, .5, 0, 2, 1, 1, 1, 1, .5, 2, 1, 2, .5], #fighting
-     [1, 1, 1, 1, 1, .5, 2, 1, 2, .5, .5, 2, 1, 1, 2, .5, 1, 1], #fire
-     [1, 2, 1, 1, 1, .5, 2, 1, .5, 1, 1, 2, .5, 1, 1, 1, 1, 1], #flying
-     [0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, 1], #ghost
-     [1, 1, .5, .5, 2, 2, .5, 1, .5, .5, 2, .5, 1, 1, 1, .5, 1, 1], #grass
-     [1, 1, 0, 2, 1, .5, 1, 0, 2, 2, 1, .5, 2, 1, 1, 1, 1, 1], #ground
-     [1, 1, 2, 1, 2, 1, 1, 1, .5, .5, .5, 2, 1, 1, .5, 2, 1, 1], #ice
-     [1, 1, 1, 1, 1, .5, 1, 0, .5, 1, 1, 1, 1, 1, 1, 1, 1, 1], #normal
-     [1, 1, 1, .5, .5, .5, 1, .5, 0, 1, 1, 2, 1, 1, 1, 1, 1, 2], #poison
-     [1, 2, 1, 2, 1, 1, 1, 1, .5, 1, 1, 1, 1, .5, 1, 1, 0, 1], #psychic
-     [1, .5, 2, 1, .5, 1, 2, 1, .5, 2, 1, 1, 1, 1, 2, 1, 1, 1], #rock
-     [1, 1, 1, 1, 1, 2, 1, 1, .5, .5, .5, 1, .5, 1, 2, 1, 1, 2], #steel
-     [1, 1, 1, 1, 2, 2, 1, 1, 1, 2, .5, .5, 1, 1, 1, .5, 1, 1], #water
-     ]
-     
-     
+  
 
 # type colors:
 colors = ['#a8b820', '#6f5848', '#7038f8', '#f9d030', '#ee99ac', '#c03128', '#f08030', '#a790f0', '#705898', '#78c84f','#e0c068','#99d8d8', '#a8a878', '#a040a0','#f85888','#b7a039','#b8b8d0', '#6890f0']
@@ -103,24 +78,7 @@ app.layout = html.Div(
                         )
                     ], className="card",) ,
                 
-                html.Div([
-                     html.H3(children="Pokémon type chart", className="card-description"),
-                    dcc.Graph(
-                        id="attack-chart",
-                        figure = px.imshow(z, 
-                            x=types, 
-                            y=types, 
-                            labels= dict(x="Defending pokémon", y="Attacking pokémon", color="Power"),
-                            color_continuous_scale='RdBu', #tropic_r, earth, picninc, RdBu, armyrose_r
-                            aspect="auto",
-                            text_auto=True
-                            )
-                            .update_xaxes(side="top")
-                            .update_layout(coloraxis_showscale=False),                        
-                        config={"displayModeBar": False},
-                        className="attack-chart",
-                        )
-                    ], className="card",),
+
 
                 
             ],
