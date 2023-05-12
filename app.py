@@ -7,7 +7,7 @@ import plotly.express as px
 # INITIALIZATION AND DATA
 # uses pandas to read csv files and query.
 data = (
-    pd.read_csv("pokemon.csv", index_col="pokedex_number", on_bad_lines="skip")
+    pd.read_csv("pokemon-smaller.csv", sep=';', index_col="pokedex_number", on_bad_lines="skip")
 )
 types = data["type1"].sort_values().unique()
 japanese_names = data["japanese_name"].sort_values().unique()
