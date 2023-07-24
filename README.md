@@ -4,7 +4,7 @@
 
 ## Deployment
 
-Depoloyed [here](https://pokemon-ee8l.onrender.com/) with render.
+Deployed [here](https://pokemon-ee8l.onrender.com/) with render.
 
 ## Running Locally
 
@@ -45,5 +45,9 @@ Three technologies constitute the core of Dash:
 2. **React.js** user interface of the web page
 3. **Plotly.js** generates the charts
 
-I chose Dash as it is something new I haven’t tried before, it is simple to use for this purpose and uses frameworks I am familiar with, like React.
+I chose Dash as it is something new I haven’t tried before, it is great for interactive visualizations, and has a component based architecture I am familiar with.
 The idea for the web page was inspired by my DataViz course at UCT (Univeristy of Cape Town) :)
+
+## Performance
+
+The website is hosted by render with a free plan which makes it a little bit slow. The data is stored at a local csv file as using an API was a bit out of scope for this personal project.
