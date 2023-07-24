@@ -2,6 +2,12 @@
 
 <img width="1016" alt="image" src="https://user-images.githubusercontent.com/70148072/228538959-e56dca93-2311-4438-abbc-a92798096755.png">
 
+## Deployment
+
+Depoloyed [here](https://pokemon-ee8l.onrender.com/) with render.
+
+## Running Locally
+
 ### initializing and running
 
 This app runs on python. (v3).
@@ -20,6 +26,12 @@ This app runs on python. (v3).
    ```
    python app.py
    ```
+
+   Can also be runned using gunicorn:
+
+      ```
+      gunicorn app:server -b :8000
+      ```
 
 ## Tech stack
 
