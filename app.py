@@ -3,7 +3,7 @@
 import pandas as pd
 from dash import html, Dash, dcc, Input, Output
 import plotly.express as px
-
+import flask
 # INITIALIZATION AND DATA
 # uses pandas to read csv files and query.
 data = (
@@ -48,12 +48,11 @@ external_stylesheets = [
     'https://fonts.googleapis.com/css2?family=Sono&display=swap',
 ]
 
-
-app = Dash(__name__, external_stylesheets=external_stylesheets)
+app = Dash(__name__, external_stylesheets=external_stylesheets) 
 app.title = "pokémon index"
 app._favicon = "favico.ico"
 app.css.config.serve_locally = True
-
+server=app.server
 
 # LAYOUT
 
